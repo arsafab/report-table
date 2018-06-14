@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
 import { AppComponent } from './app.component';
-
+import { ExcelToJsonService } from './services';
 
 @NgModule({
   declarations: [
@@ -12,7 +10,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    ExcelToJsonService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
