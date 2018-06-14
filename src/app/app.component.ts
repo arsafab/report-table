@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ExcelToJsonService } from './services';
 import { IGroup } from './models';
-import { Router } from '@angular/router';
 
 import { temp } from './data';
 
@@ -13,10 +12,10 @@ import { temp } from './data';
 export class AppComponent {
   // public groups: IGroup[] = [];
   public groups: IGroup[] = temp;
+  public activeGroup: IGroup = this.groups[0];
 
   constructor(
-    private excelToJson: ExcelToJsonService,
-    private router: Router,
+    private excelToJson: ExcelToJsonService
   ) {}
 
   public fileUpload(event): void {
@@ -27,8 +26,8 @@ export class AppComponent {
       .subscribe(data => this.parseWorkSheet(data));
   }
 
-  public navigate(groupName: string): void {
-    this.router.navigate(['/report', groupName]);
+  public setActiveGroup(group: IGroup): void {
+    this.activeGroup = group;
   }
 
   private parseWorkSheet(data: any): void {

@@ -6,13 +6,15 @@
     </label>
   </div>
 
-  <div class="list-group" *ngIf="groups.length">
-    <ul>
-      <li class="list-group-item" *ngFor="let group of groups" (click)="navigate(group.name)">
-        {{ group.name }}
-      </li>
-    </ul>
+  <div class="btn-group btn-group-lg" role="group" *ngIf="groups.length">
+    <button
+      type="button"
+      class="btn btn-info"
+      [class.active]="activeGroup.name === group.name"
+      *ngFor="let group of groups"
+      (click)="setActiveGroup(group)"
+    >
+      {{ group.name }}
+    </button>
   </div>
-
-  <router-outlet></router-outlet>
 </main>

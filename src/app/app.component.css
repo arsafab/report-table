@@ -37,13 +37,3 @@
   font-size: 1px;
   opacity: 0;
 }
-
-.list-group li:hover {
-  background-color: #007bff;
-  color: #ffffff;
-  cursor: pointer;
-  transition: background-color .4s,
-              color .4s;
-}
-
-
