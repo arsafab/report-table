@@ -1,6 +1,6 @@
 export interface IObject {
   name: string;
-  rate: number;
+  rate: number | string;
 }
 
 export interface IGroup {

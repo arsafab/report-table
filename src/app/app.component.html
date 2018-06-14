@@ -1,6 +1,16 @@
-<div class="upload-btn" *ngIf="!groups">
-  <label>
-    Нажмите, чтобы загрузить файл
-    <input type="file" (change)="fileUpload($event)" accept=".xlsx, .xls"/>
-  </label>
-</div>
+<main class="container">
+  <div class="upload-btn" *ngIf="!groups.length">
+    <label>
+      Нажмите, чтобы загрузить файл
+      <input type="file" (change)="fileUpload($event)" accept=".xlsx, .xls"/>
+    </label>
+  </div>
+
+  <div class="list-group" *ngIf="groups.length">
+    <ul>
+      <li class="list-group-item" *ngFor="let group of groups">
+        {{ group.name }}
+      </li>
+    </ul>
+  </div>
+</main>

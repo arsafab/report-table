@@ -10,7 +10,8 @@ import { temp } from './data';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public groups: IGroup[] = [];
+  // public groups: IGroup[] = [];
+  public groups: IGroup[] = temp;
 
   constructor(private excelToJson: ExcelToJsonService) {}
 
