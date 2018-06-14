@@ -2,8 +2,9 @@
   padding: 20px;
 }
 
-.upload-btn {
+.first-screen {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
   width: 100vw;
@@ -11,10 +12,10 @@
   overflow: hidden;
 }
 
-.upload-btn label {
+.upload-btn {
   position: relative;
-  margin: auto auto;
-  padding: 50px 150px;
+  margin: 0 auto;
+  padding: 20px 100px;
   border-radius: 8px;
   font-size: 40px;
   font-weight: bold;
@@ -24,7 +25,7 @@
   transform: translateY(-50%);
 }
 
-.upload-btn label:hover {
+.upload-btn:hover {
   box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5);
   transition: all .3s;
 }
@@ -35,4 +36,58 @@
   left: 0;
   font-size: 1px;
   opacity: 0;
+}
+
+.date-block {
+  margin: 0 auto;
+}
+
+.date-block button {
+  padding: 8px 15px;
+  font-size: 30px;
+}
+
+.month-picker,
+.year-picker {
+  position: relative;
+  font-size: 40px;
+  margin-right: 20px;
+}
+
+.month-picker::after{
+  content: 'Месяц...  ＋';
+}
+
+.year-picker::after {
+  content: 'Год...  ＋';
+}
+
+.month-picker::after,
+.year-picker::after {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  font-size: 34px;
+  color: #007bff;
+  z-index: -2;
+}
+
+.month-picker select,
+.year-picker select {
+  border: 0;
+  border-bottom: 3px solid #007bff;
+  padding: 10px 20px;
+  appearance: none;
+  cursor: pointer;
+  color: #007bff;
+  background: transparent;
+}
+
+.month-picker .active,
+.year-picker .active {
+  background: #ffffff;
+}
+
+.year-picker select {
+  padding-right: 50px;
 }

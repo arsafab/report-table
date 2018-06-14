@@ -8,10 +8,9 @@ import { IGroup } from '../../models';
 })
 export class TableComponent implements OnInit {
   @Input() public data: IGroup;
+  @Input() public date: Date;
 
-  constructor(
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

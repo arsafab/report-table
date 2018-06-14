@@ -10,9 +10,13 @@ import { temp } from './data';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // public groups: IGroup[] = [];
-  public groups: IGroup[] = temp;
-  public activeGroup: IGroup = this.groups[0];
+  public groups: IGroup[] = [];
+  public activeGroup: IGroup;
+  public date: Date;
+  public month: string;
+  public year: string;
+  // public groups: IGroup[] = temp;
+  // public activeGroup: IGroup = this.groups[0];
 
   constructor(
     private excelToJson: ExcelToJsonService
@@ -30,6 +34,16 @@ export class AppComponent {
     this.activeGroup = group;
   }
 
+  public submitDate(): void {
+    const month = Number(this.month);
+    const year = Number(this.year);
+
+    this.date = new Date(year, month);
+
+    this.month = null;
+    this.year = null;
+  }
+
   private parseWorkSheet(data: any): void {
     for (const key in data.sheets) {
       if (data.sheets[key]) {
@@ -44,5 +58,7 @@ export class AppComponent {
         });
       }
     }
+
+    this.activeGroup = this.groups[0];
   }
 }
