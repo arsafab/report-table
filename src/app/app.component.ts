@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ExcelToJsonService } from './services';
+import { IObject } from './models';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import { ExcelToJsonService } from './services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public result: any;
+  public objects: IObject[];
 
   constructor(private excelToJson: ExcelToJsonService) {}
 
@@ -16,9 +17,15 @@ export class AppComponent {
 
     this.excelToJson
       .processFileToJson({}, fileList[0])
-      .subscribe(data => {
-        this.result = data;
-        console.log(this.result);
-      });
+      .subscribe(data => this.parseWorkSheet(data));
+  }
+
+  private parseWorkSheet(data: any) {
+    this.objects = [...data.sheets.list].map(item => {
+      return {
+        name: item.name,
+        rate: item.rate,
+      };
+    });
   }
 }
