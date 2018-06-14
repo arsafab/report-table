@@ -1,4 +1,4 @@
-<div class="upload-btn">
+<div class="upload-btn" *ngIf="!groups">
   <label>
     Нажмите, чтобы загрузить файл
     <input type="file" (change)="fileUpload($event)" accept=".xlsx, .xls"/>

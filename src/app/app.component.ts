@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ExcelToJsonService } from './services';
-import { IObject } from './models';
+import { IGroup } from './models';
+
+import { temp } from './data';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,7 @@ import { IObject } from './models';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public objects: IObject[];
+  public groups: IGroup[] = [];
 
   constructor(private excelToJson: ExcelToJsonService) {}
 
@@ -21,11 +23,20 @@ export class AppComponent {
   }
 
   private parseWorkSheet(data: any) {
-    this.objects = [...data.sheets.list].map(item => {
-      return {
-        name: item.name,
-        rate: item.rate,
-      };
-    });
+    for (const key in data.sheets) {
+      if (data.sheets[key]) {
+        this.groups.push({
+          name: key,
+          objects: data.sheets[key].map(item => {
+            return {
+              name: item.name,
+              rate: item.rate,
+            };
+          })
+        });
+      }
+    }
+
+    console.log(this.groups);
   }
 }
