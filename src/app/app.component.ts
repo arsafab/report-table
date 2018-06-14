@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ExcelToJsonService } from './services';
 import { IGroup } from './models';
+import { Router } from '@angular/router';
 
 import { temp } from './data';
 
@@ -13,7 +14,10 @@ export class AppComponent {
   // public groups: IGroup[] = [];
   public groups: IGroup[] = temp;
 
-  constructor(private excelToJson: ExcelToJsonService) {}
+  constructor(
+    private excelToJson: ExcelToJsonService,
+    private router: Router,
+  ) {}
 
   public fileUpload(event): void {
     const fileList: FileList = event.target.files;
@@ -23,7 +27,11 @@ export class AppComponent {
       .subscribe(data => this.parseWorkSheet(data));
   }
 
-  private parseWorkSheet(data: any) {
+  public navigate(groupName: string): void {
+    this.router.navigate(['/report', groupName]);
+  }
+
+  private parseWorkSheet(data: any): void {
     for (const key in data.sheets) {
       if (data.sheets[key]) {
         this.groups.push({
@@ -37,7 +45,5 @@ export class AppComponent {
         });
       }
     }
-
-    console.log(this.groups);
   }
 }
