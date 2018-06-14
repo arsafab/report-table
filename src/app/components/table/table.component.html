@@ -1,3 +1,16 @@
-<p>
-  table works!
-</p>
+<table>
+  <thead>
+    <tr>
+      <th>№ п/п</th>
+      <th>Наименование объекта</th>
+      <th>Кол. усл. установок</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let object of data.objects; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ object.name }}</td>
+      <td>{{ object.rate }}</td>
+    </tr>
+  </tbody>
+</table>

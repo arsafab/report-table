@@ -1,0 +1,14 @@
+table {
+  margin: 20px 0;
+}
+
+table th {
+  border: 1px solid #000000;
+  padding: 3px;
+  background: #cecece;
+}
+
+table td {
+  border: 1px solid #000000;
+  padding: 3px;
+}

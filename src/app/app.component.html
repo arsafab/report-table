@@ -1,4 +1,4 @@
-<main class="container">
+<main class="wrapper">
   <div class="upload-btn" *ngIf="!groups.length">
     <label>
       Нажмите, чтобы загрузить файл
@@ -17,4 +17,6 @@
       {{ group.name }}
     </button>
   </div>
+
+  <app-table [data]="activeGroup"></app-table>
 </main>
