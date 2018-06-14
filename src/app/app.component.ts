@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  public fileUpload(event): void {
+    const fileList: FileList = event.target.files;
+    console.log(fileList);
+  }
 }
