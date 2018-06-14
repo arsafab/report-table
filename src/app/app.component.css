@@ -1,0 +1,36 @@
+.upload-btn {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.upload-btn label {
+  position: relative;
+  margin: auto auto;
+  padding: 100px 200px;
+  border-radius: 8px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #007bff;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.upload-btn label:hover {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5);
+  transition: all .3s;
+}
+
+.upload-btn input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1px;
+  opacity: 0;
+}
+
+

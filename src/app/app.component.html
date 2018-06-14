@@ -1,1 +1,6 @@
-<input class="mat-button" type="file" (change)="fileUpload($event)" accept=".xlsx, .xls">
+<div class="upload-btn">
+  <label>
+    Нажмите, чтобы загрузить файл
+    <input type="file" (change)="fileUpload($event)" accept=".xlsx, .xls"/>
+  </label>
+</div>
