@@ -1,18 +1,20 @@
-<p>{{ date }}</p>
-
-<table *ngIf="data">
+<table *ngIf="group">
   <thead>
     <tr>
       <th>№ п/п</th>
       <th>Наименование объекта</th>
       <th>Кол. усл. установок</th>
+      <th *ngFor="let item of group.objects[0].fields; let i = index">{{ i + 1 }}</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let object of data.objects; let i = index">
+    <tr *ngFor="let object of group.objects; let i = index">
       <td>{{ i + 1 }}</td>
       <td>{{ object.name }}</td>
       <td>{{ object.rate }}</td>
+      <td *ngFor="let item of object.fields">
+        <input type="text">
+      </td>
     </tr>
   </tbody>
 </table>

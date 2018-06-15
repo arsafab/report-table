@@ -7,10 +7,12 @@ import { IGroup } from '../../models';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-  @Input() public data: IGroup;
+  @Input() public group: IGroup;
   @Input() public date: Date;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 }

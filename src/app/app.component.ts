@@ -10,13 +10,14 @@ import { temp } from './data';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public groups: IGroup[] = [];
-  public activeGroup: IGroup;
-  public date: Date;
+  // public groups: IGroup[] = [];
+  // public activeGroup: IGroup;
+  // public date: Date;
   public month: string;
   public year: string;
-  // public groups: IGroup[] = temp;
-  // public activeGroup: IGroup = this.groups[0];
+  public groups: IGroup[] = temp;
+  public activeGroup: IGroup = this.groups[0];
+  public date: Date = new Date(2018, 6);
 
   constructor(
     private excelToJson: ExcelToJsonService
@@ -44,6 +45,17 @@ export class AppComponent {
     this.year = null;
   }
 
+  private fillFields(daynumber: number): void {
+    this.groups.forEach(item => {
+      return item.objects = item.objects.map(object => {
+        return {
+          ...object,
+          fields: new Array(daynumber).fill(null)
+        };
+      });
+    });
+  }
+
   private parseWorkSheet(data: any): void {
     for (const key in data.sheets) {
       if (data.sheets[key]) {
@@ -60,5 +72,6 @@ export class AppComponent {
     }
 
     this.activeGroup = this.groups[0];
+    this.fillFields(32 - this.date.getDate());
   }
 }
