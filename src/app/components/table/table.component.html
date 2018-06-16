@@ -46,7 +46,7 @@
           *ngIf="!weekends.includes(j)"
           type="text"
           [(ngModel)]="object.fields[j]"
-          (blur)="checkRest(object)"
+          (blur)="checkRest(object, object.fields[j])"
         >
       </td>
       <td>{{ object.rest }}</td>

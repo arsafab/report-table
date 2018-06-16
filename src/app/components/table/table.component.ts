@@ -24,7 +24,11 @@ export class TableComponent implements OnChanges {
     return index;
   }
 
-  public checkRest(object: IObject): void {
+  public checkRest(object: IObject, value: string | null): void {
+    if (!value) {
+      return;
+    }
+
     const sum = (object.fields as any[])
         .map(item => Number(item))
         .reduce((a, b) => a + b);
