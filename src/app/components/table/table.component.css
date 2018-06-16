@@ -26,7 +26,6 @@ table th {
   border: 1px solid #000000;
   padding: 3px;
   min-width: 30px;
-  background: #cecece;
 }
 
 table th:nth-child(n+3),
@@ -51,6 +50,10 @@ table td {
   border: 1px solid #000000;
   padding: 3px;
   min-width: 30px;
+}
+
+table .weekend {
+  background: #00ffff;
 }
 
 p {
