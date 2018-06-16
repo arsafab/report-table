@@ -39,7 +39,7 @@ export class AppComponent {
     const month = Number(this.month);
     const year = Number(this.year);
 
-    this.date = new Date(year, month);
+    this.date = new Date(year, month, 32);
 
     this.month = null;
     this.year = null;
