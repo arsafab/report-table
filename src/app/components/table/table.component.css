@@ -4,6 +4,21 @@ table {
 
 table thead tr:first-child th {
   text-align: center;
+  background: #e28ff3
+}
+
+table thead tr:first-child label {
+  margin-bottom: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+table thead tr:first-child input {
+  cursor: pointer;
+}
+
+table thead tr:nth-child(2) th {
+  text-align: center;
   background: #b4e4e0
 }
 

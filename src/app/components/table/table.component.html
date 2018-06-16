@@ -3,6 +3,13 @@
 <table *ngIf="group">
   <thead>
     <tr>
+        <th colspan="3">Календарные выходные и праздничные дни</th>
+        <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">
+          <label><input type="checkbox"></label>
+        </th>
+        <th></th>
+      </tr>
+    <tr>
       <th colspan="3">День недели</th>
       <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">{{ getDayNumber(i) }}</th>
       <th></th>
