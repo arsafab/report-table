@@ -1,6 +1,7 @@
 <div class="header">
   <p *ngIf="group">Дата: {{ date | date:'MM'}}/{{ date | date:'yyyy'}}</p>
   <button *ngIf="group" type="button" class="btn btn-success">Сформировать план-график</button>
+  <div class="average-rate"><label>Условных единиц в день(ср)<input type="text" [(ngModel)]="averageRate"></label></div>
   <p *ngIf="group">Количество рабочих дней: <span>{{ getWorkDayNumber() }}</span></p>
 </div>
 

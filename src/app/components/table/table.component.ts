@@ -13,6 +13,7 @@ export class TableComponent implements OnChanges {
   public weekends: number[] = [];
   public shifts: number[] = [];
   public resultRate: number;
+  public averageRate = 7.15;
 
   public ngOnChanges(): void {
     if (this.date && this.group) {
@@ -61,10 +62,12 @@ export class TableComponent implements OnChanges {
     object.p2 = !object.p2;
   }
 
-  public getDayResult(index: number): number {
-    return (this.group.objects as any).reduce((a, b) => {
+  public getDayResult(index: number): number | string {
+    const res = (this.group.objects as any).reduce((a, b) => {
       return a + Number(b.fields[index]);
     }, 0);
+
+    return res > this.averageRate ? `${res}: превышен средний лимит` : res;
   }
 
   public getWorkDayNumber(): number {
