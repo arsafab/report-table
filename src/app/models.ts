@@ -3,6 +3,7 @@ export interface IObject {
   rate: number | string;
   fields?: number[] | null[];
   rest?: string;
+  p2?: boolean;
 }
 
 export interface IGroup {

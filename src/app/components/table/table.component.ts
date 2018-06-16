@@ -57,6 +57,11 @@ export class TableComponent implements OnChanges {
       : this.shifts.push(index);
   }
 
+  public setP2(object: IObject): void {
+    object.p2 = !object.p2;
+    object.rate = object.p2 ? Number(object.rate) * 2 : Number(object.rate) / 2;
+  }
+
   private fillDefaultWeekends(): void {
     (this.group.objects[0].fields as number[])
         .forEach((item, i) => {

@@ -71,6 +71,11 @@ table .shift {
   background: #f876f2;
 }
 
+.p2 {
+  text-align: center;
+  background: #ffcc00;
+}
+
 p {
   margin: 10px 0;
   font-size: 20px;

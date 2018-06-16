@@ -3,7 +3,7 @@
 <table *ngIf="group">
   <thead>
     <tr>
-        <th colspan="3">Дни дежурств и после дежурств</th>
+        <th colspan="4">Дни дежурств и после дежурств</th>
         <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">
           <label>
             <input
@@ -12,10 +12,9 @@
             >
           </label>
         </th>
-        <th></th>
     </tr>
     <tr>
-        <th colspan="3">Календарные выходные и праздничные дни</th>
+        <th colspan="4">Календарные выходные и праздничные дни</th>
         <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">
           <label>
             <input
@@ -25,19 +24,18 @@
             >
           </label>
         </th>
-        <th></th>
       </tr>
     <tr>
-      <th colspan="3">День недели</th>
+      <th colspan="4">День недели</th>
       <th
         *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn"
         [style.background]="(getDayNumber(i) === 7 || getDayNumber(i) === 6) ? '#ff0000' : '#b4e4e0'"
       >
         {{ getDayNumber(i) }}
       </th>
-      <th></th>
     </tr>
     <tr>
+      <th class="p2">P2</th>
       <th>№ п/п</th>
       <th>Наименование объекта</th>
       <th>Кол. усл. установок</th>
@@ -47,6 +45,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let object of group.objects; index as i; trackBy:trackByFn">
+      <td class="p2"><input type="checkbox" (click)="setP2(object)"></td>
       <td>{{ i + 1 }}</td>
       <td>{{ object.name }}</td>
       <td>{{ object.rate }}</td>
