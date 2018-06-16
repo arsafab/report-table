@@ -62,7 +62,7 @@
         <input
           type="text"
           [(ngModel)]="object.fields[j]"
-          (blur)="checkRest(object, object.fields[j])"
+          (keyup)="checkRest(object, object.fields[j])"
         >
       </td>
       <td>{{ object.rest }}</td>
