@@ -11,7 +11,12 @@
       </tr>
     <tr>
       <th colspan="3">День недели</th>
-      <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">{{ getDayNumber(i) }}</th>
+      <th
+        *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn"
+        [style.background]="(getDayNumber(i) === 7 || getDayNumber(i) === 6) ? '#ff0000' : '#b4e4e0'"
+      >
+        {{ getDayNumber(i) }}
+      </th>
       <th></th>
     </tr>
     <tr>
