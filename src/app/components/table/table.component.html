@@ -1,5 +1,6 @@
 <div class="header">
   <p *ngIf="group">Дата: {{ date | date:'MM'}}/{{ date | date:'yyyy'}}</p>
+  <button type="button" class="btn btn-success">Сформировать план-график</button>
   <p>Количество рабочих дней: <span>{{ getWorkDayNumber() }}</span></p>
 </div>
 
