@@ -75,7 +75,7 @@ export class TableComponent implements OnChanges {
   private getResultRate(): void {
     this.resultRate = (this.group.objects as any).reduce((a, b) => {
       return a + Number(b.rate);
-    }, 0);
+    }, 0).toFixed(2);
   }
 
   private fillDefaultWeekends(): void {
