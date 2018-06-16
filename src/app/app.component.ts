@@ -47,7 +47,7 @@ export class AppComponent {
 
   private fillFields(daynumber: number): void {
     this.groups.forEach(item => {
-      return item.objects = item.objects.map(object => {
+      item.objects = item.objects.map(object => {
         return {
           ...object,
           fields: new Array(daynumber).fill(null)

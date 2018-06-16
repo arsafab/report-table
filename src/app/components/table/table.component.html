@@ -63,5 +63,13 @@
       </td>
       <td>{{ object.rest }}</td>
     </tr>
+    <tr class="result">
+      <td colspan="2"></td>
+      <td>Итого:</td>
+      <td>{{ resultRate }}</td>
+      <td *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">
+        {{ getDayResult(i) === 0 ? null : getDayResult(i) }}
+      </td>
+    </tr>
   </tbody>
 </table>

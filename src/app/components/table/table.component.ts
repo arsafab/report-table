@@ -12,12 +12,14 @@ export class TableComponent implements OnChanges {
 
   public weekends: number[] = [];
   public shifts: number[] = [];
+  public resultRate: number;
 
   constructor() {}
 
   public ngOnChanges(): void {
     if (this.date && this.group) {
       this.fillDefaultWeekends();
+      this.getResultRate();
     }
   }
 
@@ -59,6 +61,18 @@ export class TableComponent implements OnChanges {
 
   public setP2(object: IObject): void {
     object.p2 = !object.p2;
+  }
+
+  public getDayResult(index: number): number {
+    return (this.group.objects as any).reduce((a, b) => {
+      return a + Number(b.fields[index]);
+    }, 0);
+  }
+
+  private getResultRate(): void {
+    this.resultRate = (this.group.objects as any).reduce((a, b) => {
+      return a + Number(b.rate);
+    }, 0);
   }
 
   private fillDefaultWeekends(): void {
