@@ -16,6 +16,9 @@ export class TableComponent implements OnChanges {
   public averageRate = 7.15;
 
   public ngOnChanges(): void {
+    this.weekends = [];
+    this.shifts = [];
+
     if (this.date && this.group) {
       this.fillDefaultWeekends();
       this.getResultRate();
