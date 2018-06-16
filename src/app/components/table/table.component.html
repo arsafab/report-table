@@ -59,7 +59,6 @@
         [class.shift]="shifts.includes(j)"
       >
         <input
-          *ngIf="!weekends.includes(j) && !shifts.includes(j)"
           type="text"
           [(ngModel)]="object.fields[j]"
           (blur)="checkRest(object, object.fields[j])"

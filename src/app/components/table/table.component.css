@@ -63,11 +63,13 @@ table td {
   min-width: 30px;
 }
 
-table .weekend {
+table .weekend,
+table .weekend input {
   background: #00ffff;
 }
 
-table .shift {
+table .shift,
+table .shift input {
   background: #f876f2;
 }
 
