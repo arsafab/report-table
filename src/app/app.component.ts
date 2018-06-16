@@ -10,14 +10,14 @@ import { temp } from './data';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public groups: IGroup[] = [];
-  public activeGroup: IGroup;
-  public date: Date;
+  // public groups: IGroup[] = [];
+  // public activeGroup: IGroup;
+  // public date: Date;
   public month: string;
   public year: string;
-  // public groups: IGroup[] = temp;
-  // public activeGroup: IGroup = this.groups[0];
-  // public date: Date = new Date(2018, 6);
+  public groups: IGroup[] = temp;
+  public activeGroup: IGroup = this.groups[0];
+  public date: Date = new Date(2018, 6);
 
   constructor(
     private excelToJson: ExcelToJsonService
@@ -39,7 +39,7 @@ export class AppComponent {
     const month = Number(this.month);
     const year = Number(this.year);
 
-    this.date = new Date(year, month, 32);
+    this.date = new Date(year, month);
 
     this.month = null;
     this.year = null;
@@ -72,6 +72,6 @@ export class AppComponent {
     }
 
     this.activeGroup = this.groups[0];
-    this.fillFields(32 - this.date.getDate());
+    this.fillFields(32 - new Date(this.date.getFullYear(), this.date.getMonth(), 32).getDate());
   }
 }
