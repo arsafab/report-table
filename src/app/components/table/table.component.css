@@ -87,3 +87,8 @@ p {
   font-size: 18px;
   background: #8cfa7d;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}

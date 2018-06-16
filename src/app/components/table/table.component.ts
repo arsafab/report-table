@@ -14,8 +14,6 @@ export class TableComponent implements OnChanges {
   public shifts: number[] = [];
   public resultRate: number;
 
-  constructor() {}
-
   public ngOnChanges(): void {
     if (this.date && this.group) {
       this.fillDefaultWeekends();
@@ -67,6 +65,11 @@ export class TableComponent implements OnChanges {
     return (this.group.objects as any).reduce((a, b) => {
       return a + Number(b.fields[index]);
     }, 0);
+  }
+
+  public getWorkDayNumber(): number {
+    const dayNumberInMonth = this.group.objects[0].fields.length;
+    return dayNumberInMonth - this.weekends.length;
   }
 
   private getResultRate(): void {

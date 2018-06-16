@@ -1,4 +1,7 @@
-<p *ngIf="group">{{ date | date:'MM'}}/{{ date | date:'yyyy'}}</p>
+<div class="header">
+  <p *ngIf="group">Дата: {{ date | date:'MM'}}/{{ date | date:'yyyy'}}</p>
+  <p>Количество рабочих дней: <span>{{ getWorkDayNumber() }}</span></p>
+</div>
 
 <table *ngIf="group">
   <thead>
