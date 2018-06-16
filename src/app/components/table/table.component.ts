@@ -11,6 +11,7 @@ export class TableComponent implements OnChanges {
   @Input() public date: Date;
 
   public weekends: number[] = [];
+  public shifts: number[] = [];
 
   constructor() {}
 
@@ -48,6 +49,12 @@ export class TableComponent implements OnChanges {
     this.weekends.includes(index)
       ? this.weekends.splice(this.weekends.indexOf(index), 1)
       : this.weekends.push(index);
+  }
+
+  public chooseShifts(index: number): void {
+    this.shifts.includes(index)
+      ? this.shifts.splice(this.weekends.indexOf(index), 1)
+      : this.shifts.push(index);
   }
 
   private fillDefaultWeekends(): void {

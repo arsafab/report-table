@@ -3,6 +3,18 @@
 <table *ngIf="group">
   <thead>
     <tr>
+        <th colspan="3">Дни дежурств и после дежурств</th>
+        <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">
+          <label>
+            <input
+              type="checkbox"
+              (click)="chooseShifts(i)"
+            >
+          </label>
+        </th>
+        <th></th>
+    </tr>
+    <tr>
         <th colspan="3">Календарные выходные и праздничные дни</th>
         <th *ngFor="let item of group.objects[0].fields; index as i; trackBy:trackByFn">
           <label>
@@ -41,9 +53,10 @@
       <td
         *ngFor="let item of object.fields; index as j; trackBy:trackByFn"
         [class.weekend]="weekends.includes(j)"
+        [class.shift]="shifts.includes(j)"
       >
         <input
-          *ngIf="!weekends.includes(j)"
+          *ngIf="!weekends.includes(j) && !shifts.includes(j)"
           type="text"
           [(ngModel)]="object.fields[j]"
           (blur)="checkRest(object, object.fields[j])"

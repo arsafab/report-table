@@ -4,7 +4,7 @@ table {
 
 table thead tr:first-child th {
   text-align: center;
-  background: #eec3f7
+  background: #ffcc00;
 }
 
 table thead tr:first-child label {
@@ -13,11 +13,22 @@ table thead tr:first-child label {
   cursor: pointer;
 }
 
-table thead tr:first-child input {
+table thead tr:nth-child(2) th {
+  text-align: center;
+  background: #eec3f7;
+}
+
+table thead tr:nth-child(2) label {
+  margin-bottom: 0;
+  width: 100%;
   cursor: pointer;
 }
 
-table thead tr:nth-child(2) th {
+table thead tr:nth-child(3) input {
+  cursor: pointer;
+}
+
+table thead tr:nth-child(3) th {
   text-align: center;
   background: #b4e4e0
 }
@@ -54,6 +65,10 @@ table td {
 
 table .weekend {
   background: #00ffff;
+}
+
+table .shift {
+  background: #f876f2;
 }
 
 p {
