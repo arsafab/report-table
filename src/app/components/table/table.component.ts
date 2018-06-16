@@ -23,4 +23,11 @@ export class TableComponent {
 
     object.rest = (Number(object.rate) - sum).toFixed(2);
   }
+
+  public getDayNumber(index: number): number {
+    const year = this.date.getFullYear();
+    const month = this.date.getMonth();
+    const date = new Date(year, month, index + 1);
+    return date.getDay() === 0 ? 7 : date.getDay();
+  }
 }
