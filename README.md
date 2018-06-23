@@ -1,5 +1,7 @@
 [![Deploy Status](https://travis-ci.org/arsafab/report-table.svg?branch=master)](https://travis-ci.org/arsafab/report-table)
 
+### add './assets/cptable.js' in 'node_modules/xlsx-style/dist'
+
 # Report table
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
