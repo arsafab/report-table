@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { IGroup, IObject } from '../../models';
+import { JsToExcelService } from '../../services';
 
 @Component({
   selector: 'app-table',
@@ -14,6 +15,8 @@ export class TableComponent implements OnChanges {
   public shifts: number[] = [];
   public resultRate: number;
   public averageRate = 7.15;
+
+  constructor(public jsToExcelService: JsToExcelService) {}
 
   public ngOnChanges(): void {
     this.weekends = [];
