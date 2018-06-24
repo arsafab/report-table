@@ -21,6 +21,7 @@ export class JsToExcelService {
   private table = {};
   private shifts: number[];
   private weekends: number[];
+  private columns: object[];
 
   public generateReport(group: IGroup, weekends: number[], shifts: number[]): void {
     this.title = group.name;
@@ -41,8 +42,7 @@ export class JsToExcelService {
   }
 
   private generateTable(objects: IObject[]): void {
-    this.generateTableHeader(objects[0].fields.length);
-    const columns = [
+    this.columns = [
       {wch: 3},
       {wch: 50},
       {wch: 6},
@@ -50,7 +50,8 @@ export class JsToExcelService {
         return { wch: 2 };
       })
     ];
-    this.table['!cols'] = columns;
+    this.generateTableHeader(objects[0].fields.length);
+    this.table['!cols'] = this.columns;
 
     objects.forEach((object, index) => {
       const num = new Cell(index + 1, 'n');
@@ -85,6 +86,8 @@ export class JsToExcelService {
         const ref = XLSX.utils.encode_cell({ c: i + 3, r: index + 14 });
         this.table[ref] = cell;
       }
+
+      this.setBorderToAdditionalHeader(object.fields.length, index + 14);
     });
 
     const startCell = { c: 0, r: 0 };
@@ -135,40 +138,112 @@ export class JsToExcelService {
       this.table[ref] = cell;
       this.table['!merges'].push({ s: {r: 12, c: i + 2}, e: {r: 13, c: i + 2} });
     }
+
+    this.generateAdditionalHeaders(dayNumber);
+  }
+
+  private generateAdditionalHeaders(dayNumber: number): void {
+    this.columns.push({wch: 10});
+    this.columns.push({wch: 10});
+    this.columns.push({wch: 10});
+
+    const note = new Cell('Отметка о вып-нии план. работ', 's');
+    const name = new Cell('ФИО эл. монтёра', 's');
+    const note2 = new Cell('Отметка о раз-нии переноса план. работ', 's');
+
+    this.table['!merges'].push({ s: {r: 11, c: dayNumber + 3}, e: {r: 13, c: dayNumber + 3} });
+    this.table['!merges'].push({ s: {r: 11, c: dayNumber + 4}, e: {r: 13, c: dayNumber + 4} });
+    this.table['!merges'].push({ s: {r: 11, c: dayNumber + 5}, e: {r: 13, c: dayNumber + 5} });
+
+    const styles = {
+      alignment: {horizontal: 'center', vertical: 'center', textRotation: 90, wrapText: true},
+      font: {sz: 10},
+      border: border
+    };
+
+    note.s = styles;
+    name.s = styles;
+    note2.s = styles;
+
+    const noteRef = XLSX.utils.encode_cell({ c: dayNumber + 3, r: 11 });
+    const nameRef = XLSX.utils.encode_cell({ c: dayNumber + 4, r: 11 });
+    const note2Ref = XLSX.utils.encode_cell({ c: dayNumber + 5, r: 11 });
+
+    this.table[noteRef] = note;
+    this.table[nameRef] = name;
+    this.table[note2Ref] = note2;
+  }
+
+  private setBorderToAdditionalHeader(length: number, row: number): void {
+    const first = new Cell('', 'n');
+    const second = new Cell('', 's');
+    const third = new Cell('', 's');
+
+    first.s = { border: border };
+    second.s = { border: border };
+    third.s = { border: border };
+
+    const firstRef = XLSX.utils.encode_cell({ c: length + 3, r: row });
+    const secondRef = XLSX.utils.encode_cell({ c: length + 4, r: row });
+    const thirdRef = XLSX.utils.encode_cell({ c: length + 5, r: row });
+
+    this.table[firstRef] = first;
+    this.table[secondRef] = second;
+    this.table[thirdRef] = third;
   }
 
   private addBordersToMerges(dayNumber: number): void {
     const num2 = new Cell('', 's');
     const name2 = new Cell('', 's');
     const rate2 = new Cell('', 's');
-
     const num3 = new Cell('', 's');
     const name3 = new Cell('', 's');
     const rate3 = new Cell('', 's');
+    const addNote = new Cell('', 's');
+    const addName = new Cell('', 's');
+    const addNote2 = new Cell('', 's');
+    const addNote1 = new Cell('', 's');
+    const addName2 = new Cell('', 's');
+    const addNote3 = new Cell('', 's');
 
     num2.s = { border: border };
     name2.s = { border: border };
     rate2.s = { border: border };
-
     num3.s = { border: border };
     name3.s = { border: border };
     rate3.s = { border: border };
+    addNote.s = { border: border };
+    addName.s = { border: border };
+    addNote2.s = { border: border };
+    addNote1.s = { border: border };
+    addName2.s = { border: border };
+    addNote3.s = { border: border };
 
     const numRef2 = XLSX.utils.encode_cell({ c: 0, r: 12 });
     const nameRef2 = XLSX.utils.encode_cell({ c: 1, r: 12 });
     const rateRef2 = XLSX.utils.encode_cell({ c: 2, r: 12 });
-
     const numRef3 = XLSX.utils.encode_cell({ c: 0, r: 13 });
     const nameRef3 = XLSX.utils.encode_cell({ c: 1, r: 13 });
     const rateRef3 = XLSX.utils.encode_cell({ c: 2, r: 13 });
+    const addNoteRef3 = XLSX.utils.encode_cell({ c: dayNumber + 3, r: 12 });
+    const addNameRef3 = XLSX.utils.encode_cell({ c: dayNumber + 4, r: 12 });
+    const addNote2Ref3 = XLSX.utils.encode_cell({ c: dayNumber + 5, r: 12 });
+    const addNote1Ref3 = XLSX.utils.encode_cell({ c: dayNumber + 3, r: 13 });
+    const addName2Ref3 = XLSX.utils.encode_cell({ c: dayNumber + 4, r: 13 });
+    const addNote3Ref3 = XLSX.utils.encode_cell({ c: dayNumber + 5, r: 13 });
 
     this.table[numRef2] = num2;
     this.table[nameRef2] = name2;
     this.table[rateRef2] = rate2;
-
     this.table[numRef3] = num3;
     this.table[nameRef3] = name3;
     this.table[rateRef3] = rate3;
+    this.table[addNoteRef3] = addNote;
+    this.table[addNameRef3] = addName;
+    this.table[addNote2Ref3] = addNote2;
+    this.table[addNote1Ref3] = addNote1;
+    this.table[addName2Ref3] = addName2;
+    this.table[addNote3Ref3] = addNote3;
 
     for (let i = 1; i <= dayNumber; i++) {
       const cell2 = new Cell('', 's');
