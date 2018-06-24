@@ -85,14 +85,6 @@ export class JsToExcelService {
     const rate = new Cell('Кол-во условных установок', 's');
     const daysTitle = new Cell('число месяца и проводимые работы', 's');
 
-    const num2 = new Cell('', 's');
-    const name2 = new Cell('', 's');
-    const rate2 = new Cell('', 's');
-
-    const num3 = new Cell('', 's');
-    const name3 = new Cell('', 's');
-    const rate3 = new Cell('', 's');
-
     this.table['!merges'] = [
       { s: {r: 11, c: 0}, e: {r: 13, c: 0} },
       { s: {r: 11, c: 1}, e: {r: 13, c: 1} },
@@ -105,6 +97,36 @@ export class JsToExcelService {
     rate.s = { alignment: {horizontal: 'center', vertical: 'center', textRotation: 90, wrapText: true}, font: {sz: 10}, border: border };
     daysTitle.s = { alignment: {horizontal: 'center'}, font: {sz: 11}, border: border };
 
+    const numRef = XLSX.utils.encode_cell({ c: 0, r: 11 });
+    const nameRef = XLSX.utils.encode_cell({ c: 1, r: 11 });
+    const rateRef = XLSX.utils.encode_cell({ c: 2, r: 11 });
+    const daysTitleRef = XLSX.utils.encode_cell({ c: 3, r: 11 });
+
+    this.table[numRef] = num;
+    this.table[nameRef] = name;
+    this.table[rateRef] = rate;
+    this.table[daysTitleRef] = daysTitle;
+
+    this.addBordersToMerges(dayNumber);
+
+    for (let i = 1; i <= dayNumber; i++) {
+      const cell = new Cell(i, 'n');
+      cell.s = { alignment: {horizontal: 'center', vertical: 'center'}, font: {sz: 11, bold: true}, border: border };
+      const ref = XLSX.utils.encode_cell({ c: i + 2, r: 12 });
+      this.table[ref] = cell;
+      this.table['!merges'].push({ s: {r: 12, c: i + 2}, e: {r: 13, c: i + 2} });
+    }
+  }
+
+  private addBordersToMerges(dayNumber: number): void {
+    const num2 = new Cell('', 's');
+    const name2 = new Cell('', 's');
+    const rate2 = new Cell('', 's');
+
+    const num3 = new Cell('', 's');
+    const name3 = new Cell('', 's');
+    const rate3 = new Cell('', 's');
+
     num2.s = { border: border };
     name2.s = { border: border };
     rate2.s = { border: border };
@@ -113,11 +135,6 @@ export class JsToExcelService {
     name3.s = { border: border };
     rate3.s = { border: border };
 
-    const numRef = XLSX.utils.encode_cell({ c: 0, r: 11 });
-    const nameRef = XLSX.utils.encode_cell({ c: 1, r: 11 });
-    const rateRef = XLSX.utils.encode_cell({ c: 2, r: 11 });
-    const daysTitleRef = XLSX.utils.encode_cell({ c: 3, r: 11 });
-
     const numRef2 = XLSX.utils.encode_cell({ c: 0, r: 12 });
     const nameRef2 = XLSX.utils.encode_cell({ c: 1, r: 12 });
     const rateRef2 = XLSX.utils.encode_cell({ c: 2, r: 12 });
@@ -125,11 +142,6 @@ export class JsToExcelService {
     const numRef3 = XLSX.utils.encode_cell({ c: 0, r: 13 });
     const nameRef3 = XLSX.utils.encode_cell({ c: 1, r: 13 });
     const rateRef3 = XLSX.utils.encode_cell({ c: 2, r: 13 });
-
-    this.table[numRef] = num;
-    this.table[nameRef] = name;
-    this.table[rateRef] = rate;
-    this.table[daysTitleRef] = daysTitle;
 
     this.table[numRef2] = num2;
     this.table[nameRef2] = name2;
@@ -140,19 +152,10 @@ export class JsToExcelService {
     this.table[rateRef3] = rate3;
 
     for (let i = 1; i <= dayNumber; i++) {
-      const cell = new Cell(i, 'n');
       const cell2 = new Cell('', 's');
-
-      cell.s = { alignment: {horizontal: 'center', vertical: 'center'}, font: {sz: 11, bold: true}, border: border };
       cell2.s = { border: border };
-
-      const ref = XLSX.utils.encode_cell({ c: i + 2, r: 12 });
       const ref2 = XLSX.utils.encode_cell({ c: i + 2, r: 13 });
-
-      this.table[ref] = cell;
       this.table[ref2] = cell2;
-
-      this.table['!merges'].push({ s: {r: 12, c: i + 2}, e: {r: 13, c: i + 2} });
 
       if (i !== 1) {
         const cell3 = new Cell('', 's');
