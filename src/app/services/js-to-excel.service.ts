@@ -32,6 +32,7 @@ export class JsToExcelService {
     this.resultRate = data.resultRate;
     this.dayResults = data.dayResults;
     this.setWorkbookProps();
+    this.generateHeader();
     this.generateTable(data.group.objects);
     this.downloadExcel();
   }
@@ -43,6 +44,18 @@ export class JsToExcelService {
       Author: 'Roman Bely',
       CreatedDate: new Date()
     };
+  }
+
+  private generateHeader(): void {
+    const first = new Cell('УТВЕРЖДАЮ', 's', {font: {sz: 11}});
+    const second = new Cell('Вриод зам. начальника отдела - начальник ОС и СО', 's', {font: {sz: 11}});
+    const third = new Cell('майор  милиции_______________ А.А.Зарубкин', 's', {font: {sz: 11}});
+    const fourth = new Cell('_____  ______________  2018 года', 's', {font: {sz: 11}});
+
+    first.create(this.table, 25, 0);
+    second.create(this.table, 25, 1);
+    third.create(this.table, 25, 2);
+    fourth.create(this.table, 25, 3);
   }
 
   private generateTable(objects: IObject[]): void {
