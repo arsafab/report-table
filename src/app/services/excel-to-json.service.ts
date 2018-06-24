@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { forEachRight } from 'lodash/forEachRight';
 import { range } from 'lodash/range';
-import * as XLSX from 'xlsx';
+import * as XLSX from '../../assets/xlsx-style';
 
 @Injectable()
 export class ExcelToJsonService {

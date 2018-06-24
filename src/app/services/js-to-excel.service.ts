@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx-style';
-import { IGroup, IObject, Cell } from '../models';
+import * as XLSX from '../../assets/xlsx-style';
+import { IObject, Cell } from '../models';
 
 const border = {
   top: { style: 'thin', color: '#000000' },

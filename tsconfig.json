@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
     "baseUrl": "https://arsafab.github.io/report-table/",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

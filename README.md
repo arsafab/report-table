@@ -1,6 +1,5 @@
 [![Deploy Status](https://travis-ci.org/arsafab/report-table.svg?branch=master)](https://travis-ci.org/arsafab/report-table)
 
-### add './assets/cptable.js' in 'node_modules/xlsx-style/dist'
 ### the example for uploading is in assets
 
 # Report table
