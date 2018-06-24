@@ -71,9 +71,12 @@ export class TableComponent implements OnChanges {
   }
 
   public getDayResult(index: number): number | string {
-    const res = (this.group.objects as any).reduce((a, b) => {
+    let res = (this.group.objects as any).reduce((a, b) => {
       return a + Number(b.fields[index]);
     }, 0);
+
+    // tslint:disable-next-line
+    res = (res ^ 0) === res ? res : res.toFixed(2);
 
     this.dayResults[index] = res;
 
