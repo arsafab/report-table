@@ -22,13 +22,15 @@ export class JsToExcelService {
   private shifts: number[];
   private weekends: number[];
   private columns: object[];
+  private resultRate: string;
 
-  public generateReport(group: IGroup, weekends: number[], shifts: number[]): void {
-    this.title = group.name;
-    this.shifts = shifts;
-    this.weekends = weekends;
+  public generateReport(data: any): void {
+    this.title = data.group.name;
+    this.shifts = data.shifts;
+    this.weekends = data.weekends;
+    this.resultRate = data.resultRate;
     this.setWorkbookProps();
-    this.generateTable(group.objects);
+    this.generateTable(data.group.objects);
     this.downloadExcel();
   }
 
@@ -221,7 +223,7 @@ export class JsToExcelService {
         font: {bold: true},
         alignment: {horizontal: 'right', vertical: 'center'}
       });
-    const footerRate = new Cell('', 's', {
+    const footerRate = new Cell(String(this.resultRate), 's', {
       border: border,
       font: {bold: true},
       alignment: {horizontal: 'center', vertical: 'center'},

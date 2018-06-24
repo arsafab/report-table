@@ -16,7 +16,7 @@ export class TableComponent implements OnChanges {
   public resultRate: number;
   public averageRate = 7.15;
 
-  constructor(public jsToExcelService: JsToExcelService) {}
+  constructor(private jsToExcelService: JsToExcelService) {}
 
   public ngOnChanges(): void {
     this.weekends = [];
@@ -79,6 +79,15 @@ export class TableComponent implements OnChanges {
   public getWorkDayNumber(): number {
     const dayNumberInMonth = this.group.objects[0].fields.length;
     return dayNumberInMonth - this.weekends.length;
+  }
+
+  public generateReport(group: IGroup): void {
+    this.jsToExcelService.generateReport({
+      group: group,
+      weekends: this.weekends,
+      shifts: this.shifts,
+      resultRate: this.resultRate,
+    });
   }
 
   private getResultRate(): void {
