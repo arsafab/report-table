@@ -92,6 +92,7 @@ export class TableComponent implements OnChanges {
       shifts: this.shifts,
       resultRate: this.resultRate,
       dayResults: this.dayResults,
+      date: this.date,
     });
   }
 

@@ -24,6 +24,7 @@ export class JsToExcelService {
   private columns: object[];
   private resultRate: string;
   private dayResults: any[];
+  private date: Date;
 
   public generateReport(data: any): void {
     this.title = data.group.name;
@@ -31,8 +32,10 @@ export class JsToExcelService {
     this.weekends = data.weekends;
     this.resultRate = data.resultRate;
     this.dayResults = data.dayResults;
+    this.date = data.date;
     this.setWorkbookProps();
     this.generateHeader();
+    this.generateTitle();
     this.generateTable(data.group.objects);
     this.downloadExcel();
   }
@@ -56,6 +59,17 @@ export class JsToExcelService {
     second.create(this.table, 25, 1);
     third.create(this.table, 25, 2);
     fourth.create(this.table, 25, 3);
+  }
+
+  private generateTitle(): void {
+    const number = this.title.match(/\d/g).join('');
+    const month = this.getMonthName();
+    const year = this.date.getFullYear();
+    const first = new Cell('ПЛАН-ГРАФИК', 's', {font: {sz: 14}});
+    const second = new Cell(`регламента ТСО участка № ${number} на ${month} ${year} года`, 's', {font: {sz: 14}});
+
+    first.create(this.table, 12, 8);
+    second.create(this.table, 5, 9);
   }
 
   private generateTable(objects: IObject[]): void {
@@ -340,5 +354,24 @@ export class JsToExcelService {
       SheetNames: [],
       Props: {}
     };
+  }
+
+  private getMonthName(): any {
+    const number = this.date.getMonth();
+
+    switch (number) {
+      case 0: return 'Январь';
+      case 1: return 'Февраль';
+      case 2: return 'Март';
+      case 3: return 'Апрель';
+      case 4: return 'Май';
+      case 5: return 'Июнь';
+      case 6: return 'Июль';
+      case 7: return 'Август';
+      case 8: return 'Сентябрь';
+      case 9: return 'Октябрь';
+      case 10: return 'Ноябрь';
+      case 11: return 'Декабрь';
+    }
   }
 }
