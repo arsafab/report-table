@@ -19,9 +19,13 @@ export class JsToExcelService {
   };
   private title: string;
   private table = {};
+  private shifts: number[];
+  private weekends: number[];
 
-  public generateReport(group: IGroup): void {
+  public generateReport(group: IGroup, weekends: number[], shifts: number[]): void {
     this.title = group.name;
+    this.shifts = shifts;
+    this.weekends = weekends;
     this.setWorkbookProps();
     this.generateTable(group.objects);
     this.downloadExcel();
@@ -54,7 +58,7 @@ export class JsToExcelService {
       const rate = new Cell(object.rate, 's');
 
       num.s = { border: border };
-      rate.s = { alignment: {horizontal: 'center'}, border: border };
+      rate.s = { alignment: {horizontal: 'center'}, border: border, fill: {fgColor: {rgb: 'CCFFCC'}} };
       name.s = { border: border };
 
       const numRef = XLSX.utils.encode_cell({ c: 0, r: index + 14 });
@@ -68,7 +72,16 @@ export class JsToExcelService {
       for (let i = 0; i < object.fields.length; i++) {
         const data = object.fields[i] ? String(object.fields[i]) : '';
         const cell = new Cell(data, 's');
+
         cell.s = { alignment: {horizontal: 'center'}, border: border };
+        if (this.weekends.includes(i)) {
+          cell.s.fill = {fgColor: {rgb: '66FFFF'}};
+        }
+
+        if (this.shifts.includes(i)) {
+          cell.s.fill = {fgColor: {rgb: 'FF33CC'}};
+        }
+
         const ref = XLSX.utils.encode_cell({ c: i + 3, r: index + 14 });
         this.table[ref] = cell;
       }
@@ -94,7 +107,10 @@ export class JsToExcelService {
 
     num.s = { alignment: {horizontal: 'center', vertical: 'center', wrapText: true}, font: {sz: 11}, border: border };
     name.s = { alignment: {horizontal: 'center', vertical: 'center'}, border: border };
-    rate.s = { alignment: {horizontal: 'center', vertical: 'center', textRotation: 90, wrapText: true}, font: {sz: 10}, border: border };
+    rate.s = {
+      alignment: {horizontal: 'center', vertical: 'center', textRotation: 90, wrapText: true},
+      font: {sz: 10}, border: border,
+    };
     daysTitle.s = { alignment: {horizontal: 'center'}, font: {sz: 11}, border: border };
 
     const numRef = XLSX.utils.encode_cell({ c: 0, r: 11 });
@@ -112,6 +128,9 @@ export class JsToExcelService {
     for (let i = 1; i <= dayNumber; i++) {
       const cell = new Cell(i, 'n');
       cell.s = { alignment: {horizontal: 'center', vertical: 'center'}, font: {sz: 11, bold: true}, border: border };
+      if (this.weekends.includes(i - 1)) {
+        cell.s.fill = {fgColor: {rgb: '66FFFF'}};
+      }
       const ref = XLSX.utils.encode_cell({ c: i + 2, r: 12 });
       this.table[ref] = cell;
       this.table['!merges'].push({ s: {r: 12, c: i + 2}, e: {r: 13, c: i + 2} });
@@ -154,6 +173,9 @@ export class JsToExcelService {
     for (let i = 1; i <= dayNumber; i++) {
       const cell2 = new Cell('', 's');
       cell2.s = { border: border };
+      if (this.weekends.includes(i - 1)) {
+        cell2.s.fill = {fgColor: {rgb: '66FFFF'}};
+      }
       const ref2 = XLSX.utils.encode_cell({ c: i + 2, r: 13 });
       this.table[ref2] = cell2;
 
