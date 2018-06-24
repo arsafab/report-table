@@ -1,3 +1,5 @@
+import * as XLSX from 'xlsx-style';
+
 export interface IObject {
   name: string;
   rate: number | string;
@@ -20,5 +22,10 @@ export class Cell {
     this.v = value;
     this.t = type;
     this.s = styles;
+  }
+
+  public create(object: any, column: number, row: number): void {
+    const ref = XLSX.utils.encode_cell({ c: column, r: row });
+    object[ref] = this;
   }
 }
