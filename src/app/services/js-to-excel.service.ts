@@ -37,6 +37,7 @@ export class JsToExcelService {
     this.generateHeader();
     this.generateTitle();
     this.generateTable(data.group.objects);
+    this.generateFooter(data.group.objects.length);
     this.downloadExcel();
   }
 
@@ -70,6 +71,16 @@ export class JsToExcelService {
 
     first.create(this.table, 12, 8);
     second.create(this.table, 5, 9);
+  }
+
+  private generateFooter(height: number): void {
+    const first = new Cell('Инженер ОС и СО', 's', {font: {sz: 14}});
+    const second = new Cell('Р.В.Белый', 's', {font: {sz: 14}});
+    const third = new Cell('Ознакомлен: электромонтёр ОПС', 's', {font: {sz: 14}});
+
+    first.create(this.table, 1, height + 18);
+    second.create(this.table, 3, height + 18);
+    third.create(this.table, 15, height + 18);
   }
 
   private generateTable(objects: IObject[]): void {
