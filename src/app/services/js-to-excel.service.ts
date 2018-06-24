@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx-style';
 import { IGroup, IObject, Cell } from '../models';
+
+const border = {
+  top: { style: 'thin', color: '#000000' },
+  bottom: { style: 'thin', color: '#000000' },
+  right: { style: 'thin', color: '#000000' },
+  left: { style: 'thin', color: '#000000' }
+};
 
 @Injectable()
 export class JsToExcelService {
@@ -17,7 +24,6 @@ export class JsToExcelService {
     this.title = group.name;
     this.setWorkbookProps();
     this.generateTable(group.objects);
-    console.log(group);
     this.downloadExcel();
   }
 
@@ -31,54 +37,136 @@ export class JsToExcelService {
   }
 
   private generateTable(objects: IObject[]): void {
+    this.generateTableHeader(objects[0].fields.length);
     const columns = [
-      {wch: 2},
+      {wch: 3},
       {wch: 50},
-      {wch: 4},
+      {wch: 6},
       ...(objects[0].fields as number[]).map(item => {
         return { wch: 2 };
       })
     ];
     this.table['!cols'] = columns;
 
-    // cell.s = {'font': {'bold': true, 'sz': 13, 'alignment': { 'horizontal': 'center', 'vertical': 'center'}}};
-
-
     objects.forEach((object, index) => {
       const num = new Cell(index + 1, 'n');
       const name = new Cell(object.name, 's');
       const rate = new Cell(object.rate, 's');
 
-      const numRef = XLSX.utils.encode_cell({ c: 0, r: index });
-      const nameRef = XLSX.utils.encode_cell({ c: 1, r: index });
-      const rateRef = XLSX.utils.encode_cell({ c: 2, r: index });
+      num.s = { border: border };
+      rate.s = { alignment: {horizontal: 'center'}, border: border };
+      name.s = { border: border };
+
+      const numRef = XLSX.utils.encode_cell({ c: 0, r: index + 14 });
+      const nameRef = XLSX.utils.encode_cell({ c: 1, r: index + 14 });
+      const rateRef = XLSX.utils.encode_cell({ c: 2, r: index + 14 });
 
       this.table[numRef] = num;
       this.table[nameRef] = name;
       this.table[rateRef] = rate;
 
-      (object.fields as number[]).forEach((item, i) => {
-        if (item) {
-          const cell = new Cell(item, 'n');
-          const ref = XLSX.utils.encode_cell({ c: i + 3, r: index });
-          this.table[ref] = cell;
-        }
-      });
+      for (let i = 0; i < object.fields.length; i++) {
+        const data = object.fields[i] ? String(object.fields[i]) : '';
+        const cell = new Cell(data, 's');
+        cell.s = { alignment: {horizontal: 'center'}, border: border };
+        const ref = XLSX.utils.encode_cell({ c: i + 3, r: index + 14 });
+        this.table[ref] = cell;
+      }
     });
 
     const startCell = { c: 0, r: 0 };
     const endCell = { c: 500, r: 500 };
     this.table['!ref'] = XLSX.utils.encode_range(startCell, endCell);
-
-    console.log(this.table);
   }
 
+  private generateTableHeader(dayNumber: number): void {
+    const num = new Cell('№ п/п', 's');
+    const name = new Cell('Наименование ТСО', 's');
+    const rate = new Cell('Кол-во условных установок', 's');
+    const daysTitle = new Cell('число месяца и проводимые работы', 's');
 
+    const num2 = new Cell('', 's');
+    const name2 = new Cell('', 's');
+    const rate2 = new Cell('', 's');
+
+    const num3 = new Cell('', 's');
+    const name3 = new Cell('', 's');
+    const rate3 = new Cell('', 's');
+
+    this.table['!merges'] = [
+      { s: {r: 11, c: 0}, e: {r: 13, c: 0} },
+      { s: {r: 11, c: 1}, e: {r: 13, c: 1} },
+      { s: {r: 11, c: 2}, e: {r: 13, c: 2} },
+      { s: {r: 11, c: 3}, e: {r: 11, c: dayNumber + 2} },
+    ];
+
+    num.s = { alignment: {horizontal: 'center', vertical: 'center', wrapText: true}, font: {sz: 11}, border: border };
+    name.s = { alignment: {horizontal: 'center', vertical: 'center'}, border: border };
+    rate.s = { alignment: {horizontal: 'center', vertical: 'center', textRotation: 90, wrapText: true}, font: {sz: 10}, border: border };
+    daysTitle.s = { alignment: {horizontal: 'center'}, font: {sz: 11}, border: border };
+
+    num2.s = { border: border };
+    name2.s = { border: border };
+    rate2.s = { border: border };
+
+    num3.s = { border: border };
+    name3.s = { border: border };
+    rate3.s = { border: border };
+
+    const numRef = XLSX.utils.encode_cell({ c: 0, r: 11 });
+    const nameRef = XLSX.utils.encode_cell({ c: 1, r: 11 });
+    const rateRef = XLSX.utils.encode_cell({ c: 2, r: 11 });
+    const daysTitleRef = XLSX.utils.encode_cell({ c: 3, r: 11 });
+
+    const numRef2 = XLSX.utils.encode_cell({ c: 0, r: 12 });
+    const nameRef2 = XLSX.utils.encode_cell({ c: 1, r: 12 });
+    const rateRef2 = XLSX.utils.encode_cell({ c: 2, r: 12 });
+
+    const numRef3 = XLSX.utils.encode_cell({ c: 0, r: 13 });
+    const nameRef3 = XLSX.utils.encode_cell({ c: 1, r: 13 });
+    const rateRef3 = XLSX.utils.encode_cell({ c: 2, r: 13 });
+
+    this.table[numRef] = num;
+    this.table[nameRef] = name;
+    this.table[rateRef] = rate;
+    this.table[daysTitleRef] = daysTitle;
+
+    this.table[numRef2] = num2;
+    this.table[nameRef2] = name2;
+    this.table[rateRef2] = rate2;
+
+    this.table[numRef3] = num3;
+    this.table[nameRef3] = name3;
+    this.table[rateRef3] = rate3;
+
+    for (let i = 1; i <= dayNumber; i++) {
+      const cell = new Cell(i, 'n');
+      const cell2 = new Cell('', 's');
+
+      cell.s = { alignment: {horizontal: 'center', vertical: 'center'}, font: {sz: 11, bold: true}, border: border };
+      cell2.s = { border: border };
+
+      const ref = XLSX.utils.encode_cell({ c: i + 2, r: 12 });
+      const ref2 = XLSX.utils.encode_cell({ c: i + 2, r: 13 });
+
+      this.table[ref] = cell;
+      this.table[ref2] = cell2;
+
+      this.table['!merges'].push({ s: {r: 12, c: i + 2}, e: {r: 13, c: i + 2} });
+
+      if (i !== 1) {
+        const cell3 = new Cell('', 's');
+        cell3.s = { border: border };
+        const ref3 = XLSX.utils.encode_cell({ c: i + 2, r: 11 });
+        this.table[ref3] = cell3;
+      }
+    }
+  }
 
   private generateExcelFile(): any {
     this.workbook.SheetNames.push(this.title);
     this.workbook.Sheets[this.title] = this.table;
-    return XLSX.write(this.workbook, { bookType: 'xlml', type: 'binary', cellStyles: true });
+    return XLSX.write(this.workbook, { bookType: 'xlsx', bookSST: true, type: 'binary', cellStyles: true });
   }
 
   private s2ab(data: any): ArrayBuffer {
