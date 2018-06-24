@@ -23,12 +23,14 @@ export class JsToExcelService {
   private weekends: number[];
   private columns: object[];
   private resultRate: string;
+  private dayResults: any[];
 
   public generateReport(data: any): void {
     this.title = data.group.name;
     this.shifts = data.shifts;
     this.weekends = data.weekends;
     this.resultRate = data.resultRate;
+    this.dayResults = data.dayResults;
     this.setWorkbookProps();
     this.generateTable(data.group.objects);
     this.downloadExcel();
@@ -85,7 +87,7 @@ export class JsToExcelService {
         cell.create(this.table, i + 3, index + 14);
       }
 
-      this.setBorderToAdditionalHeader(object.fields.length, index + 14);
+      this.setBorderToAdditionalColumn(object.fields.length, index + 14);
     });
 
     const startCell = { c: 0, r: 0 };
@@ -163,7 +165,7 @@ export class JsToExcelService {
     note2.create(this.table, dayNumber + 5, 11);
   }
 
-  private setBorderToAdditionalHeader(length: number, row: number): void {
+  private setBorderToAdditionalColumn(length: number, row: number): void {
     const first = new Cell('', 'n', { border: border });
     const second = new Cell('', 's', { border: border });
     const third = new Cell('', 's', { border: border });
@@ -235,7 +237,11 @@ export class JsToExcelService {
     footerRate.create(this.table, 2, row);
 
     for (let i = 0; i < dayNumber; i++) {
-      const cell = new Cell('', 's', { border: border, font: {bold: true}, alignment: {textRotation: 90} });
+      const cell = new Cell('', 's', {
+        border: border, font: {bold: true},
+        alignment: {horizontal: 'center', vertical: 'center', textRotation: 90}
+      });
+      cell.v = this.dayResults[i] ? String(this.dayResults[i]) : '';
 
       if (this.weekends.includes(i)) {
         cell.s.fill = {fgColor: {rgb: '66FFFF'}};
@@ -248,7 +254,44 @@ export class JsToExcelService {
       cell.create(this.table, i + 3, row);
     }
 
-    this.setBorderToAdditionalHeader(dayNumber, row);
+    this.setBorderToAdditionalColumn(dayNumber, row);
+    this.generateFooterMerges(dayNumber, row);
+    this.generateFooterAdditionalMerges(dayNumber, row);
+  }
+
+  private generateFooterMerges(dayNumber: number, row: number): void {
+    this.table['!merges'].push({ s: {r: row, c: 0}, e: {r: row + 1, c: 0} });
+    this.table['!merges'].push({ s: {r: row, c: 1}, e: {r: row + 1, c: 1} });
+    this.table['!merges'].push({ s: {r: row, c: 2}, e: {r: row + 1, c: 2} });
+
+    const first = new Cell('', 's', { border: border });
+    const second = new Cell('', 's', { border: border });
+    const third = new Cell('', 's', { border: border });
+
+    first.create(this.table, 0, row + 1);
+    second.create(this.table, 1, row + 1);
+    third.create(this.table, 2, row + 1);
+
+    for (let i = 0; i < dayNumber; i++) {
+      this.table['!merges'].push({ s: {r: row, c: i + 3}, e: {r: row + 1, c: i + 3} });
+
+      const cell = new Cell('', 's', { border: border });
+      cell.create(this.table, i + 3, row + 1);
+    }
+  }
+
+  private generateFooterAdditionalMerges(dayNumber: number, row: number): void {
+    this.table['!merges'].push({ s: {r: row, c: dayNumber + 3}, e: {r: row + 1, c: dayNumber + 3} });
+    this.table['!merges'].push({ s: {r: row, c: dayNumber + 4}, e: {r: row + 1, c: dayNumber + 4} });
+    this.table['!merges'].push({ s: {r: row, c: dayNumber + 5}, e: {r: row + 1, c: dayNumber + 5} });
+
+    const first = new Cell('', 's', { border: border });
+    const second = new Cell('', 's', { border: border });
+    const third = new Cell('', 's', { border: border });
+
+    first.create(this.table, dayNumber + 3, row + 1);
+    second.create(this.table, dayNumber + 4, row + 1);
+    third.create(this.table, dayNumber + 5, row + 1);
   }
 
   private generateExcelFile(): any {

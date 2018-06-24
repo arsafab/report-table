@@ -15,6 +15,7 @@ export class TableComponent implements OnChanges {
   public shifts: number[] = [];
   public resultRate: number;
   public averageRate = 7.15;
+  private dayResults: any[];
 
   constructor(private jsToExcelService: JsToExcelService) {}
 
@@ -25,6 +26,7 @@ export class TableComponent implements OnChanges {
     if (this.date && this.group) {
       this.fillDefaultWeekends();
       this.getResultRate();
+      this.dayResults = [...this.group.objects[0].fields];
     }
   }
 
@@ -73,6 +75,8 @@ export class TableComponent implements OnChanges {
       return a + Number(b.fields[index]);
     }, 0);
 
+    this.dayResults[index] = res;
+
     return res > this.averageRate ? `${res}: превышен средний лимит` : res;
   }
 
@@ -87,6 +91,7 @@ export class TableComponent implements OnChanges {
       weekends: this.weekends,
       shifts: this.shifts,
       resultRate: this.resultRate,
+      dayResults: this.dayResults,
     });
   }
 
