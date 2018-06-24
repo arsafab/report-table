@@ -53,7 +53,7 @@ export class JsToExcelService {
   private generateHeader(): void {
     const first = new Cell('УТВЕРЖДАЮ', 's', {font: {sz: 11}});
     const second = new Cell('Вриод зам. начальника отдела - начальник ОС и СО', 's', {font: {sz: 11}});
-    const third = new Cell('майор  милиции_______________ А.А.Зарубкин', 's', {font: {sz: 11}});
+    const third = new Cell('майор  милиции_______________ И.И.Иванов', 's', {font: {sz: 11}});
     const fourth = new Cell('_____  ______________  2018 года', 's', {font: {sz: 11}});
 
     first.create(this.table, 25, 0);
