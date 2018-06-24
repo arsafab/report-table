@@ -71,10 +71,17 @@ export class JsToExcelService {
       this.table[rateRef] = rate;
 
       for (let i = 0; i < object.fields.length; i++) {
-        const data = object.fields[i] ? String(object.fields[i]) : '';
+        let data;
+
+        if (object.fields[i]) {
+          data = object.p2 ? 'Р2' : 'Р1';
+        } else {
+          data = '';
+        }
+
         const cell = new Cell(data, 's');
 
-        cell.s = { alignment: {horizontal: 'center'}, border: border };
+        cell.s = { alignment: {horizontal: 'center'}, border: border, font: {sz: 11, bold: true}, };
         if (this.weekends.includes(i)) {
           cell.s.fill = {fgColor: {rgb: '66FFFF'}};
         }
