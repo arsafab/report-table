@@ -91,3 +91,7 @@
 .year-picker select {
   padding-right: 50px;
 }
+
+.btn-group {
+  margin-bottom: 20px;
+}
