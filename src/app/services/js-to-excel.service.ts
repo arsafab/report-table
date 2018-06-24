@@ -100,6 +100,7 @@ export class JsToExcelService {
     const startCell = { c: 0, r: 0 };
     const endCell = { c: 500, r: 500 };
     this.table['!ref'] = XLSX.utils.encode_range(startCell, endCell);
+    this.generateTableFooter(objects[0].fields.length, objects.length + 14);
   }
 
   private generateTableHeader(dayNumber: number): void {
@@ -182,13 +183,9 @@ export class JsToExcelService {
   }
 
   private setBorderToAdditionalHeader(length: number, row: number): void {
-    const first = new Cell('', 'n');
-    const second = new Cell('', 's');
-    const third = new Cell('', 's');
-
-    first.s = { border: border };
-    second.s = { border: border };
-    third.s = { border: border };
+    const first = new Cell('', 'n', { border: border });
+    const second = new Cell('', 's', { border: border });
+    const third = new Cell('', 's', { border: border });
 
     const firstRef = XLSX.utils.encode_cell({ c: length + 3, r: row });
     const secondRef = XLSX.utils.encode_cell({ c: length + 4, r: row });
@@ -268,6 +265,46 @@ export class JsToExcelService {
         this.table[ref3] = cell3;
       }
     }
+  }
+
+  private generateTableFooter(dayNumber: number, row: number): void {
+    const footerFirst = new Cell('', 's', { border: border });
+    const footerSecond = new Cell('ИТОГО:', 's', {
+        border: border,
+        font: {bold: true},
+        alignment: {horizontal: 'right', vertical: 'center'}
+      });
+    const footerRate = new Cell('', 's', {
+      border: border,
+      font: {bold: true},
+      alignment: {horizontal: 'center', vertical: 'center'},
+      fill: {fgColor: {rgb: 'FFFFCC'}}
+    });
+
+    const footerFirstRef = XLSX.utils.encode_cell({ c: 0, r: row });
+    const footerSecondRef = XLSX.utils.encode_cell({ c: 1, r: row });
+    const footerRateRef = XLSX.utils.encode_cell({ c: 2, r: row });
+
+    this.table[footerFirstRef] = footerFirst;
+    this.table[footerSecondRef] = footerSecond;
+    this.table[footerRateRef] = footerRate;
+
+    for (let i = 0; i < dayNumber; i++) {
+      const cell = new Cell('', 's', { border: border, font: {bold: true}, alignment: {textRotation: 90} });
+
+      if (this.weekends.includes(i)) {
+        cell.s.fill = {fgColor: {rgb: '66FFFF'}};
+      }
+
+      if (this.shifts.includes(i)) {
+        cell.s.fill = {fgColor: {rgb: 'FF33CC'}};
+      }
+
+      const ref = XLSX.utils.encode_cell({ c: i + 3, r: row });
+      this.table[ref] = cell;
+    }
+
+    this.setBorderToAdditionalHeader(dayNumber, row);
   }
 
   private generateExcelFile(): any {
