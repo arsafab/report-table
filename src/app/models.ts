@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx-style';
+import * as XLSX from '../../libs/xlsx-style';
 
 export interface IObject {
   name: string;
